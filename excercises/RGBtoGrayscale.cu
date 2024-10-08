@@ -173,5 +173,39 @@ int main(int argc, char** argv)
     unsigned char* image;
     int width, height;
 
+    read_png(input_filename, &image, &width, &height);
+
+    size_t rgb_size = width * height * CHANNELS * sizeof(unsigned char);
+    size_t grey_size = width * height * sizeof(unsigned char);
+
+    unsigned char *d_rgb, *d_grey;
+  
+    dim3 blockSize(16, 16);
+    dim3 gridSize((width + blockSize.x - 1) / blockSize.x, (height + blockSize.y - 1) / blockSize.y);
+
+    CHECK_LAST_CUDA_ERROR();
+    colorToGray<<<gridSize, blockSize>>>(d_grey, d_rgb, width, height);
     
+    CHECK_LAST_CUDA_ERROR();
+
+    unsigned char* output_image = (unsigned char*)malloc(grey_size);
+    
+    CHECK_LAST_CUDA_ERROR();
+
+    if (write_png(output_filename, output_image, width, height) != 0) {
+        printf("Error writing PNG file\n");
+        return 1;
+    }
+
+    cudaFree(d_rgb);
+    cudaFree(d_grey);
+
+    CHECK_LAST_CUDA_ERROR();
+
+    free(image);
+    free(output_image);
+
+    printf("Image successfully converted and saved as %s\n", output_filename);
+
+    return 0;
 }
