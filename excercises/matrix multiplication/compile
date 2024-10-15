@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Compilazione del codice
+nvcc -o matrix_mult matrix_mult.cu
+
+# Pulizia del file results.txt
+rm -f results.txt
+
+# Esecuzione senza profiling per la raccolta dei tempi
+./matrix_mult > results.txt
+
+# Profilazione con nvprof
+for bs in "8x8" "8x16" "8x32" "16x8" "16x16" "16x32" "32x8" "32x16" "32x32"; do
+    nvprof --metrics achieved_occupancy,ipc ./matrix_mult >> results.txt 2>&1
+done
+
+echo "Profiling completato e risultati salvati in results.txt"
