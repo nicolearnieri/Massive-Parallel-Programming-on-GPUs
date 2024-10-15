@@ -1,0 +1,325 @@
+Monolithic,8x8,31.60750
+GridStride,8x8,12.47426
+Monolithic,8x16,11.71215
+GridStride,8x16,11.71932
+Monolithic,8x32,11.76534
+GridStride,8x32,11.70313
+Monolithic,16x8,9.60762
+GridStride,16x8,9.56614
+Monolithic,16x16,9.32423
+GridStride,16x16,9.26353
+Monolithic,16x32,9.94336
+GridStride,16x32,9.27028
+Monolithic,32x8,12.18971
+GridStride,32x8,12.10717
+Monolithic,32x16,12.11597
+GridStride,32x16,12.05272
+Monolithic,32x32,12.24158
+GridStride,32x32,12.10502
+Controllo di correttezza superato!
+==315599== NVPROF is profiling process 315599, command: ./matrix_mult
+Monolithic,8x8,34.72478
+GridStride,8x8,40.49270
+Monolithic,8x16,25.27527
+GridStride,8x16,24.74763
+Monolithic,8x32,25.08606
+GridStride,8x32,25.49290
+Monolithic,16x8,23.06378
+GridStride,16x8,23.16366
+Monolithic,16x16,23.40067
+GridStride,16x16,22.20496
+Monolithic,16x32,24.57940
+GridStride,16x32,20.86464
+Monolithic,32x8,23.64483
+GridStride,32x8,23.48624
+Monolithic,32x16,23.19538
+GridStride,32x16,23.12383
+Monolithic,32x32,23.76336
+GridStride,32x32,23.75673
+Controllo di correttezza superato!
+==315599== Profiling application: ./matrix_mult
+==315599== Profiling result:
+==315599== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.920233    0.959720    0.939187
+          9                                       ipc                              Executed IPC    1.008478    1.366282    1.143031
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.600174    0.604666    0.602090
+          3                                       ipc                              Executed IPC    2.081558    2.671763    2.436565
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.922728    0.965996    0.950814
+          9                                       ipc                              Executed IPC    1.010680    1.373162    1.151405
+==315730== NVPROF is profiling process 315730, command: ./matrix_mult
+Monolithic,8x8,29.16840
+GridStride,8x8,31.47446
+Monolithic,8x16,25.87885
+GridStride,8x16,31.96277
+Monolithic,8x32,25.06634
+GridStride,8x32,24.41006
+Monolithic,16x8,23.08643
+GridStride,16x8,23.69850
+Monolithic,16x16,21.08490
+GridStride,16x16,20.77866
+Monolithic,16x32,20.92829
+GridStride,16x32,20.85992
+Monolithic,32x8,23.45907
+GridStride,32x8,23.49244
+Monolithic,32x16,23.34478
+GridStride,32x16,23.31701
+Monolithic,32x32,23.50710
+GridStride,32x32,23.52668
+Controllo di correttezza superato!
+==315730== Profiling application: ./matrix_mult
+==315730== Profiling result:
+==315730== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.918052    0.959880    0.938057
+          9                                       ipc                              Executed IPC    1.007861    1.355199    1.139381
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.599494    0.619268    0.608180
+          3                                       ipc                              Executed IPC    2.087801    2.662133    2.469753
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.921427    0.967212    0.951072
+          9                                       ipc                              Executed IPC    1.010546    1.368023    1.147037
+==315900== NVPROF is profiling process 315900, command: ./matrix_mult
+Monolithic,8x8,24.78487
+GridStride,8x8,24.98124
+Monolithic,8x16,24.10287
+GridStride,8x16,24.33719
+Monolithic,8x32,23.96332
+GridStride,8x32,23.92850
+Monolithic,16x8,21.87741
+GridStride,16x8,21.80385
+Monolithic,16x16,21.52062
+GridStride,16x16,22.62755
+Monolithic,16x32,23.80567
+GridStride,16x32,21.38868
+Monolithic,32x8,23.88996
+GridStride,32x8,28.45833
+Monolithic,32x16,23.55459
+GridStride,32x16,23.44490
+Monolithic,32x32,23.78100
+GridStride,32x32,23.39224
+Controllo di correttezza superato!
+==315900== Profiling application: ./matrix_mult
+==315900== Profiling result:
+==315900== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.918266    0.960093    0.938334
+          9                                       ipc                              Executed IPC    1.005901    1.358019    1.140618
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.601751    0.613742    0.606902
+          3                                       ipc                              Executed IPC    2.114786    2.670600    2.474440
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.921048    0.967050    0.951816
+          9                                       ipc                              Executed IPC    1.009152    1.373731    1.149840
+==316105== NVPROF is profiling process 316105, command: ./matrix_mult
+Monolithic,8x8,25.10601
+GridStride,8x8,24.85686
+Monolithic,8x16,24.24201
+GridStride,8x16,24.45100
+Monolithic,8x32,24.26922
+GridStride,8x32,24.11102
+Monolithic,16x8,22.16770
+GridStride,16x8,22.59044
+Monolithic,16x16,21.91745
+GridStride,16x16,22.05978
+Monolithic,16x32,21.05498
+GridStride,16x32,21.82378
+Monolithic,32x8,23.65411
+GridStride,32x8,23.92862
+Monolithic,32x16,23.78775
+GridStride,32x16,23.45642
+Monolithic,32x32,23.48198
+GridStride,32x32,24.27104
+Controllo di correttezza superato!
+==316105== Profiling application: ./matrix_mult
+==316105== Profiling result:
+==316105== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.914541    0.959252    0.937599
+          9                                       ipc                              Executed IPC    1.008285    1.356192    1.140672
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.600246    0.624337    0.609142
+          3                                       ipc                              Executed IPC    2.111173    2.669708    2.470695
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.920885    0.966456    0.950838
+          9                                       ipc                              Executed IPC    1.011170    1.368223    1.149439
+==316250== NVPROF is profiling process 316250, command: ./matrix_mult
+Monolithic,8x8,24.85661
+GridStride,8x8,24.82343
+Monolithic,8x16,24.08536
+GridStride,8x16,24.10955
+Monolithic,8x32,24.10970
+GridStride,8x32,24.13226
+Monolithic,16x8,22.25599
+GridStride,16x8,22.43112
+Monolithic,16x16,21.54838
+GridStride,16x16,21.58355
+Monolithic,16x32,22.01078
+GridStride,16x32,20.76573
+Monolithic,32x8,23.46111
+GridStride,32x8,23.44114
+Monolithic,32x16,23.49765
+GridStride,32x16,23.82128
+Monolithic,32x32,23.60604
+GridStride,32x32,23.27769
+Controllo di correttezza superato!
+==316250== Profiling application: ./matrix_mult
+==316250== Profiling result:
+==316250== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.915308    0.959109    0.938556
+          9                                       ipc                              Executed IPC    1.007406    1.364322    1.141848
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.598199    0.614837    0.604648
+          3                                       ipc                              Executed IPC    2.118844    2.670828    2.455455
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.924189    0.966185    0.950870
+          9                                       ipc                              Executed IPC    1.011526    1.374807    1.150368
+==316336== NVPROF is profiling process 316336, command: ./matrix_mult
+Monolithic,8x8,24.83058
+GridStride,8x8,24.87389
+Monolithic,8x16,23.95102
+GridStride,8x16,24.01917
+Monolithic,8x32,24.02152
+GridStride,8x32,24.13709
+Monolithic,16x8,22.14323
+GridStride,16x8,21.90806
+Monolithic,16x16,21.55736
+GridStride,16x16,21.55317
+Monolithic,16x32,21.94907
+GridStride,16x32,20.84469
+Monolithic,32x8,23.45907
+GridStride,32x8,23.35736
+Monolithic,32x16,23.40551
+GridStride,32x16,23.24623
+Monolithic,32x32,23.46441
+GridStride,32x32,23.32545
+Controllo di correttezza superato!
+==316336== Profiling application: ./matrix_mult
+==316336== Profiling result:
+==316336== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.917727    0.960137    0.938412
+          9                                       ipc                              Executed IPC    1.006644    1.364857    1.142151
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.600017    0.606023    0.603254
+          3                                       ipc                              Executed IPC    2.112293    2.669226    2.451321
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.922591    0.966761    0.951459
+          9                                       ipc                              Executed IPC    1.010471    1.373595    1.150652
+==316398== NVPROF is profiling process 316398, command: ./matrix_mult
+Monolithic,8x8,24.73753
+GridStride,8x8,24.82694
+Monolithic,8x16,24.50907
+GridStride,8x16,24.22927
+Monolithic,8x32,24.17137
+GridStride,8x32,24.09981
+Monolithic,16x8,21.94502
+GridStride,16x8,21.94802
+Monolithic,16x16,21.64926
+GridStride,16x16,21.51576
+Monolithic,16x32,21.63039
+GridStride,16x32,21.77599
+Monolithic,32x8,23.58005
+GridStride,32x8,23.43663
+Monolithic,32x16,23.50523
+GridStride,32x16,23.34040
+Monolithic,32x32,23.42312
+GridStride,32x32,23.33975
+Controllo di correttezza superato!
+==316398== Profiling application: ./matrix_mult
+==316398== Profiling result:
+==316398== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.916257    0.958956    0.938686
+          9                                       ipc                              Executed IPC    1.007570    1.368776    1.142588
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.600329    0.621618    0.609422
+          3                                       ipc                              Executed IPC    2.095612    2.682357    2.447207
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.920628    0.966818    0.951435
+          9                                       ipc                              Executed IPC    1.008750    1.376295    1.151193
+==316602== NVPROF is profiling process 316602, command: ./matrix_mult
+Monolithic,8x8,24.87302
+GridStride,8x8,25.44428
+Monolithic,8x16,24.34808
+GridStride,8x16,24.44734
+Monolithic,8x32,24.32750
+GridStride,8x32,24.16517
+Monolithic,16x8,21.98319
+GridStride,16x8,22.15745
+Monolithic,16x16,21.62924
+GridStride,16x16,21.68396
+Monolithic,16x32,23.83595
+GridStride,16x32,21.02593
+Monolithic,32x8,23.86940
+GridStride,32x8,23.88630
+Monolithic,32x16,23.34329
+GridStride,32x16,23.28383
+Monolithic,32x32,23.63570
+GridStride,32x32,23.43205
+Controllo di correttezza superato!
+==316602== Profiling application: ./matrix_mult
+==316602== Profiling result:
+==316602== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.916902    0.959567    0.938440
+          9                                       ipc                              Executed IPC    1.008783    1.368455    1.143025
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.600347    0.606939    0.602671
+          3                                       ipc                              Executed IPC    2.086824    2.681506    2.457413
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.919872    0.966588    0.950973
+          9                                       ipc                              Executed IPC    1.009910    1.374004    1.150454
+==316676== NVPROF is profiling process 316676, command: ./matrix_mult
+Monolithic,8x8,24.70886
+GridStride,8x8,24.74573
+Monolithic,8x16,24.23337
+GridStride,8x16,23.97620
+Monolithic,8x32,23.98587
+GridStride,8x32,24.02341
+Monolithic,16x8,21.99088
+GridStride,16x8,21.85442
+Monolithic,16x16,21.58178
+GridStride,16x16,21.48545
+Monolithic,16x32,21.69999
+GridStride,16x32,21.79235
+Monolithic,32x8,23.50291
+GridStride,32x8,23.40250
+Monolithic,32x16,23.32168
+GridStride,32x16,23.30721
+Monolithic,32x32,23.48596
+GridStride,32x32,23.36813
+Controllo di correttezza superato!
+==316676== Profiling application: ./matrix_mult
+==316676== Profiling result:
+==316676== Metric result:
+Invocations                               Metric Name                        Metric Description         Min         Max         Avg
+Device "NVIDIA GeForce GTX 980 (0)"
+    Kernel: matrixMultMonolithic(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.915062    0.960178    0.938315
+          9                                       ipc                              Executed IPC    1.010055    1.367170    1.142977
+    Kernel: matrixInit(float*, int, int, float)
+          3                        achieved_occupancy                        Achieved Occupancy    0.599759    0.630528    0.614381
+          3                                       ipc                              Executed IPC    2.083031    2.678597    2.430824
+    Kernel: matrixMultGridStride(float*, float*, float*, int, int, int)
+          9                        achieved_occupancy                        Achieved Occupancy    0.920271    0.967164    0.950836
+          9                                       ipc                              Executed IPC    1.012053    1.377944    1.151528

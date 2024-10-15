@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Compilazione del codice
-nvcc -o matrix_mult matrix_mult.cu
+nvcc -o matrix_mult matrixmultiplication.cu
 
 # Pulizia del file results.txt
 rm -f results.txt
