@@ -3,66 +3,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <chrono>  // Aggiunto per i timer
+#include <chrono>
 
-
-#define ROWS_A (1 << 11)  // 2048 perché 2^11, shift a sinistra di 11 bit
+#define ROWS_A (1 << 11)  // 2048
 #define COLS_A (1 << 10)  // 1024
-#define ROWS_B COLS_A     // 1024 perché il numero di colonne della prima matrice deve essere uguale al numero di righe della seconda
+#define ROWS_B COLS_A     // 1024
 #define COLS_B (1 << 9)   // 512
-
 
 // Kernel per l'inizializzazione della matrice
 __global__ void matrixInit(float* matrix, int rows, int cols, float value) 
 {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Calcolo dell'indice della colonna della matrice
-    int idy = blockIdx.y * blockDim.y + threadIdx.y; // Calcolo dell'indice della riga della matrice 
-    //ricordare che riga e colonna in cuda sono invertite rispetto allo standard
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    int idy = blockIdx.y * blockDim.y + threadIdx.y;
     
-    if (idx < cols && idy < rows)  // Controllo per evitare accessi fuori dalla matrice
+    if (idx < cols && idy < rows)
     {
-        matrix[idy * cols + idx] = value; // Inizializzazione dell'elemento della matrice con il valore passato come parametro
-        //la matrice è memorizzata in modo lineare, quindi l'elemento di indice (i,j) è memorizzato in posizione i*cols+j
+        matrix[idy * cols + idx] = value;
     }
 }
-
 
 // Kernel per la moltiplicazione delle matrici (versione monolitica)
 __global__ void matrixMultMonolithic(float* A, float* B, float* C, int rowsA, int colsA, int colsB) 
 {
-    //calcolo degli indici
-    int row = blockIdx.y * blockDim.y + threadIdx.y; 
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
     int col = blockIdx.x * blockDim.x + threadIdx.x;
     
-    if (row < rowsA && col < colsB) //controllo per non uscire dalla matrice
+    if (row < rowsA && col < colsB)
     {
-        float sum = 0.0f; 
+        float sum = 0.0f;
         for (int k = 0; k < colsA; ++k) 
         {
-            sum += A[row * colsA + k] * B[k * colsB + col]; //moltiplicazione di ogni elemento della riga di A per la colonna di B
+            sum += A[row * colsA + k] * B[k * colsB + col];
         }
-        C[row * colsB + col] = sum; //salvataggio del risultato nella matrice C
+        C[row * colsB + col] = sum;
     }
 }
-
 
 // Kernel per la moltiplicazione delle matrici (versione grid-stride loop)
 __global__ void matrixMultGridStride(float* A, float* B, float* C, int rowsA, int colsA, int colsB) 
 {
-    for (int row = blockIdx.y * blockDim.y + threadIdx.y; row < rowsA; row += gridDim.y * blockDim.y)  // Iterazione sulle righe
+    for (int row = blockIdx.y * blockDim.y + threadIdx.y; row < rowsA; row += gridDim.y * blockDim.y)
     {
-        for (int col = blockIdx.x * blockDim.x + threadIdx.x; col < colsB; col += gridDim.x * blockDim.x)  // Iterazione sulle colonne
+        for (int col = blockIdx.x * blockDim.x + threadIdx.x; col < colsB; col += gridDim.x * blockDim.x)
         {
             float sum = 0.0f;
             for (int k = 0; k < colsA; ++k) 
             {
                 sum += A[row * colsA + k] * B[k * colsB + col];
             }
-            C[row * colsB + col] = sum; //salvataggio del risultato nella matrice C
+            C[row * colsB + col] = sum;
         }
     }
 }
-
 
 // Funzione di controllo della correttezza
 void checkCorrectness(float* A, float* B, float* C, int rowsA, int colsA, int colsB) {
@@ -81,8 +73,15 @@ void checkCorrectness(float* A, float* B, float* C, int rowsA, int colsA, int co
     printf("Controllo di correttezza superato!\n");
 }
 
+int main(int argc, char** argv) {
+    if (argc != 3) {
+        printf("Uso: %s <block_size_x> <block_size_y>\n", argv[0]);
+        return 1;
+    }
 
-int main() {
+    int blockSizeX = atoi(argv[1]);
+    int blockSizeY = atoi(argv[2]);
+
     float *A, *B, *C;
     float *d_A, *d_B, *d_C;
     
@@ -107,38 +106,34 @@ int main() {
     matrixInit<<<initGridSizeB, initBlockSize>>>(d_B, ROWS_B, COLS_B, 2.0f);
     matrixInit<<<initGridSizeA, initBlockSize>>>(d_C, ROWS_A, COLS_B, 0.0f);
     
-    // Configurazioni di blocco da testare
-    int blockSizes[][2] = {{8,8}, {8,16}, {8,32}, {16,8}, {16,16}, {16,32}, {32,8}, {32,16}, {32,32}};
+    // Configurazione del blocco in base all'input
+    dim3 blockSize(blockSizeX, blockSizeY);
+    dim3 gridSize((COLS_B + blockSize.x - 1) / blockSize.x, 
+                  (ROWS_A + blockSize.y - 1) / blockSize.y);
     
-    for (int i = 0; i < 9; ++i) {
-        dim3 blockSize(blockSizes[i][0], blockSizes[i][1]);
-        dim3 gridSize((COLS_B + blockSize.x - 1) / blockSize.x, 
-                      (ROWS_A + blockSize.y - 1) / blockSize.y);
-        
-        // Timer start per la versione monolitica
-        auto start = std::chrono::high_resolution_clock::now();
-        
-        // Versione monolitica
-        matrixMultMonolithic<<<gridSize, blockSize>>>(d_A, d_B, d_C, ROWS_A, COLS_A, COLS_B);
-        cudaDeviceSynchronize();
-        
-        // Timer stop per la versione monolitica
-        auto end = std::chrono::high_resolution_clock::now();
-        auto monolithicTime = std::chrono::duration<float, std::milli>(end - start).count();
-        printf("Monolithic,%dx%d,%.5f\n", blockSize.x, blockSize.y, monolithicTime);
-        
-        // Timer start per la versione grid-stride
-        start = std::chrono::high_resolution_clock::now();
-        
-        // Versione grid-stride
-        matrixMultGridStride<<<gridSize, blockSize>>>(d_A, d_B, d_C, ROWS_A, COLS_A, COLS_B);
-        cudaDeviceSynchronize();
-        
-        // Timer stop per la versione grid-stride
-        end = std::chrono::high_resolution_clock::now();
-        auto gridStrideTime = std::chrono::duration<float, std::milli>(end - start).count();
-        printf("GridStride,%dx%d,%.5f\n", blockSize.x, blockSize.y, gridStrideTime);
-    }
+    // Timer start per la versione monolitica
+    auto start = std::chrono::high_resolution_clock::now();
+    
+    // Versione monolitica
+    matrixMultMonolithic<<<gridSize, blockSize>>>(d_A, d_B, d_C, ROWS_A, COLS_A, COLS_B);
+    cudaDeviceSynchronize();
+    
+    // Timer stop per la versione monolitica
+    auto end = std::chrono::high_resolution_clock::now();
+    auto monolithicTime = std::chrono::duration<float, std::milli>(end - start).count();
+    printf("Monolithic,%dx%d,%.5f\n", blockSize.x, blockSize.y, monolithicTime);
+    
+    // Timer start per la versione grid-stride
+    start = std::chrono::high_resolution_clock::now();
+    
+    // Versione grid-stride
+    matrixMultGridStride<<<gridSize, blockSize>>>(d_A, d_B, d_C, ROWS_A, COLS_A, COLS_B);
+    cudaDeviceSynchronize();
+    
+    // Timer stop per la versione grid-stride
+    end = std::chrono::high_resolution_clock::now();
+    auto gridStrideTime = std::chrono::duration<float, std::milli>(end - start).count();
+    printf("GridStride,%dx%d,%.5f\n", blockSize.x, blockSize.y, gridStrideTime);
     
     // Copia del risultato sul host per il controllo
     cudaMemcpy(A, d_A, ROWS_A * COLS_A * sizeof(float), cudaMemcpyDeviceToHost);

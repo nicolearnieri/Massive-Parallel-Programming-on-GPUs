@@ -6,12 +6,24 @@ nvcc -o matrix_mult matrixmultiplication.cu
 # Pulizia del file results.txt
 rm -f results.txt
 
-# Esecuzione senza profiling per la raccolta dei tempi
-./matrix_mult > results.txt
+# Funzione per eseguire il programma con una data dimensione del blocco
+run_matrix_mult() {
+    block_size_x=$1
+    block_size_y=$2
+    echo "Esecuzione con block size ${block_size_x}x${block_size_y}"
+    ./matrix_mult $block_size_x $block_size_y >> results.txt
+    nvprof --metrics achieved_occupancy,ipc ./matrix_mult $block_size_x $block_size_y >> results.txt 2>&1
+}
 
-# Profilazione con nvprof
-for bs in "8x8" "8x16" "8x32" "16x8" "16x16" "16x32" "32x8" "32x16" "32x32"; do
-    nvprof --metrics achieved_occupancy,ipc ./matrix_mult >> results.txt 2>&1
-done
+# Esecuzione per diverse dimensioni del blocco
+run_matrix_mult 8 8
+run_matrix_mult 8 16
+run_matrix_mult 8 32
+run_matrix_mult 16 8
+run_matrix_mult 16 16
+run_matrix_mult 16 32
+run_matrix_mult 32 8
+run_matrix_mult 32 16
+run_matrix_mult 32 32
 
 echo "Profiling completato e risultati salvati in results.txt"
